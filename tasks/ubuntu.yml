@@ -18,15 +18,13 @@
   with_items:
     - urllib3
     - ndg-httpsclient
+    - pyopenssl
     - pyasn1
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14")
   become: yes
 
-- name: "[UBUNTU (trusty)] uninstalling pyOpenSSL ..."
-  pip:
-    name: PyOpenSSL
-    state: absent
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14")
+- name: "[UBUNTU (trusty)] force updating packages ..."
+  command: pip install ndg-httpsclient pyasn1 --upgrade
   become: yes
 
 - name: "[UBUNTU] adding resilio repository key ..."
