@@ -1,5 +1,14 @@
 ---
 
+- name: "[DEBIAN] installing resilio-sync prerequisites ..."
+  apt:
+    name: {{ item }}
+    update_cache: yes
+    cache_valid_time: 3600
+  with_items:
+    - gnupg
+  become: yes
+
 - name: "[DEBIAN] adding resilio repository key ..."
   apt_key:
     url: https://linux-packages.resilio.com/resilio-sync/key.asc
