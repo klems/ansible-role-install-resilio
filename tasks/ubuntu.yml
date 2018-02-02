@@ -1,32 +1,5 @@
 ---
 
-- name: "[UBUNTU (trusty)] installing resilio-sync prerequisites ..."
-  apt:
-    name: "{{ item }}"
-    update_cache: yes
-    cache_valid_time: 3600
-  with_items:
-    - python-pip
-    - ca-certificates
-    - libffi-dev
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14")
-  become: yes
-
-- name: "[UBUNTU (trusty)] installing resilio-sync prerequisites ..."
-  pip:
-    name: "{{ item }}"
-  with_items:
-    - urllib3
-    - ndg-httpsclient
-    - pyopenssl
-    - pyasn1
-  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14")
-  become: yes
-
-- name: "[UBUNTU (trusty)] force updating packages ..."
-  command: pip install ndg-httpsclient pyasn1 pyopenssl --upgrade
-  become: yes
-
 - name: "[UBUNTU] adding resilio repository key ..."
   apt_key:
     url: https://linux-packages.resilio.com/resilio-sync/key.asc
