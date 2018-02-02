@@ -1,0 +1,43 @@
+---
+
+- name: "[UBUNTU] adding resilio repository key ..."
+  apt_key:
+    url: https://linux-packages.resilio.com/resilio-sync/key.asc
+    state: present
+  become: yes
+
+- name: "[UBUNTU] adding resilio repository ..."
+  apt_repository:
+    repo: deb http://linux-packages.resilio.com/resilio-sync/deb resilio-sync non-free
+    state: present
+    filename: 'resilio-sync'
+  become: yes
+
+- name: "[UBUNTU] updating aptitude cache ..."
+  apt:
+    update_cache: yes
+  become: yes
+
+- name: "[UBUNTU] installing resilio-sync ..."
+  apt:
+    name: resilio-sync
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+
+- name: "[UBUNTU] enabling resilio-sync on startup ..."
+  service:
+    name: resilio-sync
+    state: restarted
+    enabled: yes
+  become: yes
+
+- name: "[UBUNTU] creating resilio folders ..."
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+    owner: rslsync
+    group: rslsync
+  with_items: "{{ resilio_folders }}"
+  become: yes
