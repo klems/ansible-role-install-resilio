@@ -1,12 +1,30 @@
 ---
 
+- name: "[DEBIAN (wheezy)] installing python-pip ..."
+  apt:
+    name: python-pip
+    update_cache: yes
+    cache_valid_time: 3600
+  when: (ansible_distribution == "Debian" and ansible_distribution_major_version == "7")
+  become: yes
+
+- name: "[DEBIAN (wheezy)] installing resilio-sync prerequisites ..."
+  pip:
+    name: "{{ item }}"
+  when: (ansible_distribution == "Debian" and ansible_distribution_major_version == "7")
+  with_items:
+    - urllib3
+    - pyOpenSSL
+    - ndg-httpsclient
+    - pyasn1
+  become: yes
+
 - name: "[DEBIAN] installing resilio-sync prerequisites ..."
   apt:
     name: "{{ item }}"
     update_cache: yes
     cache_valid_time: 3600
   with_items:
-    - ca-certificates
     - gnupg
   become: yes
 
