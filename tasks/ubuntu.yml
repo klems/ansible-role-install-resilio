@@ -1,5 +1,24 @@
 ---
 
+- name: "[UBUNTU (trusty)] installing python-pip ..."
+  apt:
+    name: python-pip
+    update_cache: yes
+    cache_valid_time: 3600
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14")
+  become: yes
+
+- name: "[UBUNTU (trusty)] installing resilio-sync prerequisites ..."
+  pip:
+    name: "{{ item }}"
+  when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14")
+  with_items:
+    - urllib3
+    - pyOpenSSL
+    - ndg-httpsclient
+    - pyasn1
+  become: yes
+
 - name: "[UBUNTU] adding resilio repository key ..."
   apt_key:
     url: https://linux-packages.resilio.com/resilio-sync/key.asc
