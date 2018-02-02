@@ -2,9 +2,12 @@
 
 - name: "[UBUNTU (trusty)] installing python-pip ..."
   apt:
-    name: python-pip
+    name: "{{ item }}"
     update_cache: yes
     cache_valid_time: 3600
+    with_items:
+      - python-pip
+      - ca-certificates
   when: (ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "14")
   become: yes
 
