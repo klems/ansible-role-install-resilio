@@ -24,7 +24,7 @@
   become: yes
 
 - name: "[UBUNTU (trusty)] force updating packages ..."
-  command: pip install ndg-httpsclient pyasn1 --upgrade
+  command: pip install ndg-httpsclient pyasn1 pyopenssl --upgrade
   become: yes
 
 - name: "[UBUNTU] adding resilio repository key ..."
